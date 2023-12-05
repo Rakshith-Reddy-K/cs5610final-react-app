@@ -15,7 +15,7 @@ function Comments() {
 
   const handleAddComment = () => {
     createComment(productId, comment).then((comment) => {
-      dispatch(addComment({ text: comment, likes: 0, user: currentUser }));
+      dispatch(addComment({ text: comment, likes: 0, user_id: currentUser.id }));
       setComment("");
     });
   };
@@ -37,7 +37,6 @@ function Comments() {
       <form
         className="comment-form"
         onSubmit={(e) => {
-          e.preventDefault();
           handleAddComment();
         }}
       >
