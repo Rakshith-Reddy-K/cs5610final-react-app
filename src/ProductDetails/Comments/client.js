@@ -11,6 +11,11 @@ export const findCommentsForProduct = async (productId) => {
   return response.data;
 };
 
+export const getAllUsers = async () => {
+  const response = await axios.get(`${API_BASE}/users`);
+  return response.data;
+}
+
 export const getUserById= async (userId) => {
   const response = await axios.get(`${API_BASE}/users/${userId}`);
   return response.data;

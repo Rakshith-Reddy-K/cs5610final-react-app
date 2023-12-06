@@ -1,45 +1,44 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
-import { addComment, setComments } from './CommentsReducer';
-import {findCommentsForProduct, createComment} from './client';
+import { useDispatch, useSelector } from "react-redux";
+import { addComment, setComments } from "./CommentsReducer";
+import { findCommentsForProduct, createComment, getAllUsers } from "./client";
 import { useParams } from "react-router-dom";
 import "./index.css";
+
 function Comments() {
   const dispatch = useDispatch();
   const { productId } = useParams();
   const { comments } = useSelector((state) => state.commentsReducer);
   const [comment, setComment] = useState("");
-  const currentUser = { name: "John Doe", id: 1};
-  const [username, setUsername] = useState('');
+  const currentUser = { name: "John Doe", id: 1, isActive: true };
+  const [users, setUsers] = useState([]);
 
   const handleAddComment = () => {
-    createComment(productId, comment).then((comment) => {
+    createComment(productId, comment, currentUser.id).then((comment) => {
       dispatch(addComment({ text: comment, likes: 0, user_id: currentUser.id }));
       setComment("");
     });
   };
 
-  const handleLike = (index) => () => {
-    const comments = [...comments];
-    comments[index].likes += 1;
-    dispatch(setComments(comments));
+  const getUsernameById = (userId) => {
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].id == userId) {
+        return users[i].username;
+      }
+    }
+    return "Anonymous";
   };
-
+  
   useEffect(() => {
     findCommentsForProduct(productId).then((comments) => dispatch(setComments(comments)));
+    getAllUsers().then((users) => setUsers(users));
   }, [productId]);
 
   return (
     <div className="comments ps-5 mb-5">
       <h3>Comments</h3>
       <hr />
-      <form
-        className="comment-form"
-        onSubmit={(e) => {
-          handleAddComment();
-        }}
-      >
+      <form className="comment-form" onSubmit={handleAddComment}>
         <input
           type="text"
           placeholder="Add a comment"
@@ -54,13 +53,9 @@ function Comments() {
       {comments.map((comment) => (
         <div key={comment.id} className="comment-card">
           <p>
-            
-            {/* <Link to={`/profile/${comment.user.id}`}> */}
-              <strong>{comment.user_id}</strong>
-            {/* </Link> */}
+            <strong>{getUsernameById(comment.user_id)}</strong>
           </p>
           <p>{comment.comment}</p>
-          <button onClick={handleLike(comment.id)}>Like ({comment.likes})</button>
         </div>
       ))}
     </div>
