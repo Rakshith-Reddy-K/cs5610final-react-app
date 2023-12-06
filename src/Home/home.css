@@ -1,0 +1,81 @@
+.search-form {
+    margin: 20px 0;
+    text-align: center;
+  }
+  
+  .search-input {
+    padding: 10px;
+    margin-right: 10px;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+  
+  .search-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .search-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* adjust minmax for your desired card width */
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.product-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.product-image {
+    width: 100%; /* Adjust if you want a padding around the image */
+    height: auto;
+    object-fit: contain; /* Keeps the aspect ratio of the image */
+}
+
+.product-info {
+    width: 100%;
+    padding: 0.5rem 0;
+}
+
+.product-info h5 {
+    font-size: 0.9rem;
+    margin: 0.5rem 0;
+}
+
+.product-info p {
+    font-size: 0.8rem;
+    color: #333;
+    margin: 0.5rem 0;
+}
+
+.rating {
+    font-size: 0.7rem; /* Smaller star size */
+    color: #ffc107; /* Gold color for stars */
+    margin: 0.5rem 0;
+}
+
+/* Style for filled stars */
+.rating .filled-star {
+    color: gold;
+}
+
+/* Style for empty stars (if you choose to use them) */
+.rating .empty-star {
+    color: #ddd;
+}
