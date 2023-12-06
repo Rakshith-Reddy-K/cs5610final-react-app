@@ -1,16 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './index.css'; 
-import Comments from './Comments';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { addtoCart } from "../Cart/CartReducer";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./index.css";
+import Comments from "./Comments";
+import { useDispatch } from "react-redux";
+import { UpdateCart } from "../Cart/client";
+
 function ProductDetails() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
+  const currentUser = { name: "John Doe", id: 1, isActive: true };
+
+  const handleAddToCart = (productId) => {
+    UpdateCart(currentUser.id, productId).then((product) => {
+      dispatch(addtoCart(product));
+    });
+  };
 
   useEffect(() => {
     fetch(`https://cs5610-final-56af3c7859e7.herokuapp.com/products/${productId}`)
-      .then(response => response.json())
-      .then(data => setProduct(data));
+      .then((response) => response.json())
+      .then((data) => setProduct(data));
   }, [productId]);
 
   return (
@@ -23,14 +36,28 @@ function ProductDetails() {
           <div className="product-info p-5 ms-5">
             <h2>{product.title}</h2>
             <p>{product.description}</p>
-            <p><strong>Price:</strong> ${product.price}</p>
-            <p><strong>Category:</strong> {product.category}</p>
-            <div><strong>Rating:</strong> <StarRating rating={product.rate}/></div>
-            <button className='btn btn-warning'>Add to Cart</button>
+            <p>
+              <strong>Price:</strong> ${product.price}
+            </p>
+            <p>
+              <strong>Category:</strong> {product.category}
+            </p>
+            <div>
+              <strong>Rating:</strong> <StarRating rating={product.rate} />
+            </div>
+            <button
+              className="btn btn-warning"
+              onClick={() => {
+                handleAddToCart(product.id);
+                navigate("/cart");
+              }}
+            >
+              Add to Cart
+            </button>
           </div>
         </div>
       )}
-      <div className='row'>
+      <div className="row">
         <Comments />
       </div>
     </div>

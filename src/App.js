@@ -9,6 +9,7 @@ import store from "./store";
 import Login from "./Login"
 import Register from "./Signup"
 import { AuthProvider } from "./Home/AuthContext"; 
+import Cart from "./Cart";
 function App() {
   return (
     <Provider store={store}>
@@ -21,6 +22,7 @@ function App() {
             <Route path="/Register" element={<Register/>} />
             <Route path="/Home" element={<Home />} />
             <Route path="/details/:productId" element={<ProductDetails />} />
+            <Route path="/cart" element={<Cart/>} />
           </Routes>
         </AuthProvider>
         </div>
