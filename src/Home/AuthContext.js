@@ -3,12 +3,15 @@ import React, { createContext, useContext, useState } from 'react';
 const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
+    // Initialize the user state with the user object from local storage, if it exists
+    const [user, setUser] = useState(() => {
+        const storedUser = localStorage.getItem('user');
+        return storedUser ? JSON.parse(storedUser) : null;
+    });
 
-    const login = (username) => {
-        console.log("InsideAuth");
-        setUser({ username });
-        localStorage.setItem('user',JSON.stringify({ username }));
+    const login = (userDetails) => {
+        setUser(userDetails);
+        localStorage.setItem('user', JSON.stringify(userDetails));
     };
 
     const logout = () => {

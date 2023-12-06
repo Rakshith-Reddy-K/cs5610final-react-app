@@ -16,7 +16,8 @@ function Login() {
       const response = await client.Signin(username, password);
       console.log("here", response);
       if(response === 'Login successful'){
-        login(username);
+        const userData = await client.getUserByUsername(username)
+        login(userData);
         navigate("/home");
       }
       else{
