@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link } from "react-router-dom";
 import Rating from './rating'; // Make sure to create this component
 import './home.css'; 
+import { useAuth } from './AuthContext';
 
 // Debounce function
 const debounce = (func, delay) => {
@@ -20,7 +21,7 @@ const debounce = (func, delay) => {
 const Home = () => {
     const [products, setProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-
+    const { user } = useAuth();
     // Function to fetch products
     const fetchProducts = async (search = '') => {
         try {
@@ -46,6 +47,14 @@ const Home = () => {
 
   return (
       <div>
+         <div className="login-status">
+                {user ? (
+                    <span>Hello, {user.username}</span>
+                ) : (
+                    <Link to="/login">Hello, Sign up/Login</Link>
+                )}
+            </div>
+            
           <form onSubmit={(e) => e.preventDefault()} className="search-form">
               <input
                   type="text"

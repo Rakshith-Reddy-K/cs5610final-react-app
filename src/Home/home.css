@@ -79,3 +79,11 @@
 .rating .empty-star {
     color: #ddd;
 }
+.login-status {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 10px;
+    background-color: #f8f8f8;
+    /* Add more styling as needed */
+}

@@ -8,11 +8,13 @@ import { Provider } from "react-redux";
 import store from "./store";
 import Login from "./Login"
 import Register from "./Signup"
+import { AuthProvider } from "./Home/AuthContext"; 
 function App() {
   return (
     <Provider store={store}>
       <HashRouter>
         <div>
+        <AuthProvider>
           <Routes>
             <Route path="/" element={<Navigate to="/Login" />} />
             <Route path="/Login" element={<Login/>} />
@@ -20,6 +22,7 @@ function App() {
             <Route path="/Home" element={<Home />} />
             <Route path="/details/:productId" element={<ProductDetails />} />
           </Routes>
+        </AuthProvider>
         </div>
       </HashRouter>
     </Provider>
