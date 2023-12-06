@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import Rating from './rating'; // Make sure to create this component
 import './home.css'; 
 import { useAuth } from './AuthContext';
+import { useNavigate } from "react-router-dom";
+
 
 // Debounce function
 const debounce = (func, delay) => {
@@ -21,7 +23,8 @@ const debounce = (func, delay) => {
 const Home = () => {
     const [products, setProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const { user } = useAuth();
+    const { user, logout } = useAuth();
+    const navigate = useNavigate();
     // Function to fetch products
     const fetchProducts = async (search = '') => {
         try {
@@ -31,7 +34,10 @@ const Home = () => {
             console.error('Error fetching products:', error);
         }
     };
-
+    const handleLogout = () => {
+      logout();
+      navigate('/home'); // Redirect to the home page 
+  };
     // Debounced version of fetchProducts
     const debouncedFetchProducts = useCallback(debounce(fetchProducts, 500), []);
 
@@ -49,12 +55,16 @@ const Home = () => {
       <div>
          <div className="login-status">
                 {user ? (
-                    <span>Hello, {user.username}</span>
+                    <>
+                        <span>Hello, {user.username}</span>
+                        <br></br>
+                        <button onClick={handleLogout}>Logout</button>
+                    </>
                 ) : (
                     <Link to="/login">Hello, Sign up/Login</Link>
                 )}
             </div>
-            
+
           <form onSubmit={(e) => e.preventDefault()} className="search-form">
               <input
                   type="text"

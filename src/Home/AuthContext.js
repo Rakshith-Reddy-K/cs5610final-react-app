@@ -6,8 +6,9 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')));
 
     const login = (username) => {
+        console.log("InsideAuth");
         setUser({ username });
-        localStorage.setItem('user',"test" /*JSON.stringify({ username })*/);
+        localStorage.setItem('user',JSON.stringify({ username }));
     };
 
     const logout = () => {

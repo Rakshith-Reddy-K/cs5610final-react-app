@@ -1,12 +1,14 @@
 import * as client from "./client";
 import { useState } from "react";
 // import { Signin } from "./client";
+import { useAuth } from '../Home/AuthContext'; 
 import { useNavigate } from "react-router-dom";
 function Login() {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -14,6 +16,7 @@ function Login() {
       const response = await client.Signin(username, password);
       console.log("here", response);
       if(response === 'Login successful'){
+        login(username);
         navigate("/home");
       }
       else{
