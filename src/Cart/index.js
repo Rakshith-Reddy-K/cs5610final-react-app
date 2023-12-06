@@ -50,7 +50,7 @@ function Cart() {
         <Card key={productId} className="mb-4">
           <Row className="no-gutters">
             <Col md={4}>
-            <Card.Img variant="top" src={product.image} className="product-image" />
+            <Card.Img variant="top" src={product.image} className="cart-product-image" />
             </Col>
             <Col md={8}>
               <Card.Body>
