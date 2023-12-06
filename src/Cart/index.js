@@ -15,8 +15,8 @@ function Cart() {
 
   const handleRemoveFromCart = (cartId) => {
     RemoveFromCart(cartId).then(() => {
-      const newCartItems = cart.filter((id) => id !== cartId);
-      dispatch(setCart(newCartItems));
+      const newCart = cart.filter((item) => item.id !== cartId);
+      dispatch(setCart(newCart));
     });
   };
 
