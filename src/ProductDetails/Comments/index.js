@@ -5,6 +5,7 @@ import { findCommentsForProduct, createComment, getAllUsers } from "./client";
 import { useParams, useNavigate } from "react-router-dom";
 import "./index.css";
 import { useAuth } from '../../Home/AuthContext';
+import { Link } from "react-router-dom";
 
 function Comments() {
   const dispatch = useDispatch();
@@ -60,7 +61,7 @@ function Comments() {
       {comments.map((comment) => (
         <div key={comment.id} className="comment-card">
           <p>
-            <strong>{getUsernameById(comment.user_id)}</strong>
+            <strong><Link to={`/profile/${comment.user_id}`}>{getUsernameById(comment.user_id)}</Link></strong>
           </p>
           <p>{comment.comment}</p>
         </div>

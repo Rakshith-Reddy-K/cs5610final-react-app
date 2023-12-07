@@ -7,6 +7,7 @@ import Comments from "./Comments";
 import { useDispatch } from "react-redux";
 import { UpdateCart } from "../Cart/client";
 import { useAuth } from '../Home/AuthContext'; 
+import { Link } from "react-router-dom";
 
 function ProductDetails() {
   const dispatch = useDispatch();
@@ -45,6 +46,10 @@ function ProductDetails() {
             </p>
             <div>
               <strong>Rating:</strong> <StarRating rating={product.rate} />
+            </div>
+            <div>
+              <strong>Seller:</strong> <Link to={`/profile/${product.seller_id}`}>{product.seller_name}</Link>
+
             </div>
             <button
               className="btn btn-warning"
