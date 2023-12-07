@@ -1,22 +1,41 @@
-
-import { useState } from 'react';
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Signup } from "./client";
+import { useAuth } from "../Home/AuthContext";
 
 function Register() {
-
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-//   const [passwordConfirm, setConfirmPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  //   const [passwordConfirm, setConfirmPassword] = useState('');
   const [isBuyer, setIsBuyer] = useState(false);
-  const [mobilenum, setMobilenum] = useState('');
+  const [mobilenum, setMobilenum] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const { login } = useAuth();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(username, email, password, isBuyer, mobilenum);
+  const handleSubmit = async () => {
+    // e.preventDefault();
+    // console.log(username, email, password, isBuyer, mobilenum);
 
-    // Call API to submit form data
-  }
+    try {
+      const response = await Signup(
+        username,
+        name,
+        password,
+        email,
+        mobilenum,
+        isBuyer,
+        description
+      );
+      login(username);
+      navigate("/home");
+    } catch (error) {
+      console.log(error);
+      alert("Failed to sign in");
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -26,64 +45,79 @@ function Register() {
       <input
         type="text"
         value={username}
-        onChange={(e) => setUsername(e.target.value)}  
+        onChange={(e) => setUsername(e.target.value)}
+      />
+
+      <label>Name</label>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
       />
 
       <label>Email</label>
-      <input 
+      <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
 
-        <label>Phone</label>    
-        <input
-          type="text"
-          value={mobilenum}
-          onChange={(e) => setMobilenum(e.target.value)}
-        />
+      <label>Phone</label>
+      <input
+        type="text"
+        value={mobilenum}
+        onChange={(e) => setMobilenum(e.target.value)}
+      />
 
       <label>Password</label>
       <input
-        type="password" 
+        type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
 
-        {/* <label>Confirm Password</label>
+      {/* <label>Confirm Password</label>
         <input
           type="password"
           value={passwordConfirm}
           onChange={(e) => setConfirmPassword(e.target.value)}
         /> */}
 
-        {/* <label>Buyer</label>
+      {/* <label>Buyer</label>
         <input
           type="radio"
           value={isBuyer}
           onChange={(e) => setIsBuyer(e.target.value)}
         /> */}
 
-    <br></br>
-    <div>
-    <label>Buyer</label>
-    <input 
-        type="radio"
-        value={true}
-        checked={isBuyer === true}
-        onChange={() => setIsBuyer(true)}
-    />
-    </div>
-   
-    <div>
-    <label>Seller</label>
-    <input
-        type="radio"  
-        value={false}
-        checked={isBuyer === false}
-        onChange={() => setIsBuyer(false)} 
-    />
-    </div>
+      <br></br>
+      <div>
+        <label>Buyer</label>
+        <input
+          type="radio"
+          checked={isBuyer === true}
+          onChange={() => setIsBuyer(true)}
+        />
+      </div>
+
+      <div>
+        <label>Seller</label>
+        <input
+          type="radio"
+          checked={isBuyer === false}
+          onChange={() => setIsBuyer(false)}
+        />
+      </div>
+
+      {isBuyer === false && (
+        <div>
+          <label>Description</label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+          />
+        </div>
+      )}
 
       <button type="submit">Register</button>
     </form>
