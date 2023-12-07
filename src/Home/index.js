@@ -56,7 +56,7 @@ const Home = () => {
          <div className="login-status">
                 {user ? (
                     <>
-                        <span>Hello, {user.username}</span>
+                        <span>Hello, <Link to={`/profile/${user.id}`}>{user.username}</Link></span>
                         <br></br>
                         <button onClick={handleLogout}>Logout</button>
                     </>
