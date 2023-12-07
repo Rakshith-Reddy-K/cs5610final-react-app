@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import "./index.css";
 function Cart() {
   const dispatch = useDispatch();
-  const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState(null);
   const currentUser = { name: "John Doe", id: 1, isActive: true };
   const { cart } = useSelector((state) => state.cartReducer);
   console.log("cart", cart);
@@ -22,16 +22,15 @@ function Cart() {
   };
 
   useEffect(() => {
+    fetch(`https://cs5610-final-56af3c7859e7.herokuapp.com/cart/`)
+      .then((response) => response.json())
+      .then((data) => {
+        dispatch(setCart(data));
+      });
+
     fetch(`https://cs5610-final-56af3c7859e7.herokuapp.com/products/`)
       .then((response) => response.json())
       .then((data) => setProducts(data));
-    setTimeout(() => {
-      fetch(`https://cs5610-final-56af3c7859e7.herokuapp.com/cart/`)
-        .then((response) => response.json())
-        .then((data) => {
-          dispatch(setCart(data));
-        });
-    }, 1000);
   }, []);
 
   return (
@@ -43,6 +42,8 @@ function Cart() {
           <Link to="/home">Go to Home Page</Link>
         </div>
       ) : (
+        cart &&
+        products &&
         cart.map((item) => {
           if (item.user_id == currentUser.id) {
             const product = products.find((product) => product.id === item.product_id);
