@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addComment, setComments } from "./CommentsReducer";
 import { findCommentsForProduct, createComment, getAllUsers } from "./client";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import "./index.css";
 import { useAuth } from '../../Home/AuthContext';
 
 function Comments() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { productId } = useParams();
   const { comments } = useSelector((state) => state.commentsReducer);
   const [comment, setComment] = useState("");
@@ -15,6 +16,11 @@ function Comments() {
   const [users, setUsers] = useState([]);
 
   const handleAddComment = () => {
+    if (!user) {
+      alert("Please login first");
+      navigate("/login");
+      return;
+    }
     createComment(productId, comment, user.id).then((comment) => {
       dispatch(addComment({ text: comment, likes: 0, user_id: user.id }));
       setComment("");
