@@ -9,16 +9,17 @@ export default function SellerProfile() {
   const { sellerId } = useParams();
   const [seller, setSeller] = useState();
   const [error, setError] = useState(false);
-  const [isUserFollowing,setIsUserFollowing] = useState(null);
+  const [isUserFollowing,setIsUserFollowing] = useState(false);
   const followSeller = () => {
-    if(isUserFollowing !== null) {
-      deleteFollow(isUserFollowing).then(()=>{
-        setIsUserFollowing(null)
+    if(isUserFollowing) {
+      deleteFollow(user.id,sellerId).then(()=>{
+        setIsUserFollowing(false)
       })
-    }
+    } else {
     createFollow(user.id,sellerId).then((response)=>{
       setIsUserFollowing(response.id)
     })
+  }
   }
   useEffect(() => {
     getUserById(sellerId).then((user) => {
@@ -30,9 +31,9 @@ export default function SellerProfile() {
     if(user && user.id) {
     getFollow(user.id,sellerId).then((response)=>{
       if(JSON.stringify(response) === '{}') {
-        setIsUserFollowing(null)  
+        setIsUserFollowing(false)  
       } else {
-      setIsUserFollowing(response.id)
+      setIsUserFollowing(true)
       }
       setError(false)
     }).catch((err) => {
@@ -72,7 +73,7 @@ export default function SellerProfile() {
                   <div className="d-flex justify-content-end text-center py-1">
                   <div>
                       <button type="button" class="btn btn-primary" onClick={followSeller} style={{ height: '36px', overflow: 'visible', margin: 10 }}>
-                        {isUserFollowing!==null? "Unfollow" :"Follow"}
+                        {isUserFollowing? "Unfollow" :"Follow"}
                       </button>
                   </div>
                   </div>
