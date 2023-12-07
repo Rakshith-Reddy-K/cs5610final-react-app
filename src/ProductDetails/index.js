@@ -49,6 +49,11 @@ function ProductDetails() {
             <button
               className="btn btn-warning"
               onClick={() => {
+                if (!user) {
+                  alert("Please login first");
+                  navigate("/login");
+                  return;
+                }
                 handleAddToCart(product.id);
                 navigate("/cart");
               }}

@@ -1,7 +1,7 @@
 import * as client from "./client";
 import { useState } from "react";
 import { useAuth } from '../Home/AuthContext'; 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 function Login() {
 
   const [username, setUsername] = useState("");
@@ -51,7 +51,11 @@ function Login() {
       <button type="submit" className="btn btn-primary" >Login</button>
       <p className="ps-5"></p>
       <button type="button" className="btn btn-warning" onClick={() => navigate("/register")}>Sign Up</button>
-
+      <p className="ps-5"></p>
+      
+      <Link to="/home" className="btn btn-link">
+      Guest user: Go to Home Page
+      </Link>
      
     </form>
   );
