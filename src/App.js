@@ -10,6 +10,9 @@ import Login from "./Login"
 import Register from "./Signup"
 import { AuthProvider } from "./Home/AuthContext"; 
 import Cart from "./Cart";
+import SellerProfile from './Profile/SellerProfile'
+import BuyerProfile from './Profile/BuyerProfile'
+
 import Admin from "./Admin";
 function App() {
   return (
@@ -25,6 +28,8 @@ function App() {
             <Route path="/Home" element={<Home />} />
             <Route path="/details/:productId" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart/>} />
+            <Route path="/sellerProfile/:sellerId" element={<SellerProfile/>} />
+            <Route path="/profile/:userId" element={<BuyerProfile/>}/>
           </Routes>
         </AuthProvider>
         </div>
