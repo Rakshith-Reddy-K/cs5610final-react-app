@@ -4,20 +4,24 @@ import { Link, useParams } from 'react-router-dom';
 import { createFollow, deleteFollow, getFollow, getUserById } from './client';
 import './index.css'
 import { useAuth } from '../Home/AuthContext';
+import { getFollowersCount } from './client';
 export default function SellerProfile() {
   const { user } = useAuth();
   const { sellerId } = useParams();
   const [seller, setSeller] = useState();
   const [error, setError] = useState(false);
   const [isUserFollowing,setIsUserFollowing] = useState(false);
+  const [followersCount, setfollowersCount] = useState(null);
   const followSeller = () => {
     if(isUserFollowing) {
       deleteFollow(user.id,sellerId).then(()=>{
         setIsUserFollowing(false)
+        setfollowersCount(followersCount-1)
       })
     } else {
-    createFollow(user.id,sellerId).then((response)=>{
-      setIsUserFollowing(response.id)
+    createFollow(user.id,sellerId).then(()=>{
+      setIsUserFollowing(true)
+      setfollowersCount(followersCount+1)
     })
   }
   }
@@ -25,6 +29,11 @@ export default function SellerProfile() {
     getUserById(sellerId).then((user) => {
       setSeller(user)
       setError(false)
+    }).catch((err) => {
+      setError(err)
+    })
+    getFollowersCount(sellerId).then((followers) =>{
+      setfollowersCount(followers.count);
     }).catch((err) => {
       setError(err)
     })
@@ -69,9 +78,13 @@ export default function SellerProfile() {
                     <MDBCardText>{seller.email}</MDBCardText>
                   </div>
                 </div>
-                {user && user.id && <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
+                {user && <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
                   <div className="d-flex justify-content-end text-center py-1">
-                  <div>
+                  {followersCount!== null &&<div style={{marginRight:40}}>
+                        <MDBCardText className="mb-1 h5">{followersCount}</MDBCardText>
+                        <MDBCardText className="small text-muted mb-0">Following</MDBCardText>
+                  </div>}
+                  <div style={{marginLeft:40}}>
                       <button type="button" class="btn btn-primary" onClick={followSeller} style={{ height: '36px', overflow: 'visible', margin: 10 }}>
                         {isUserFollowing? "Unfollow" :"Follow"}
                       </button>
