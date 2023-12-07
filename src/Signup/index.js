@@ -26,7 +26,7 @@ function Register() {
         isBuyer,
         description
       );
-      login(username);
+      login(response);
       navigate("/home");
     } catch (error) {
       alert("Failed to sign in");
