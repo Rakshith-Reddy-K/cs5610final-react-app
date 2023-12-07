@@ -4,18 +4,19 @@ import { addComment, setComments } from "./CommentsReducer";
 import { findCommentsForProduct, createComment, getAllUsers } from "./client";
 import { useParams } from "react-router-dom";
 import "./index.css";
+import { useAuth } from '../../Home/AuthContext';
 
 function Comments() {
   const dispatch = useDispatch();
   const { productId } = useParams();
   const { comments } = useSelector((state) => state.commentsReducer);
   const [comment, setComment] = useState("");
-  const currentUser = { name: "John Doe", id: 1, isActive: true };
+  const { user, logout } = useAuth();
   const [users, setUsers] = useState([]);
 
   const handleAddComment = () => {
-    createComment(productId, comment, currentUser.id).then((comment) => {
-      dispatch(addComment({ text: comment, likes: 0, user_id: currentUser.id }));
+    createComment(productId, comment, user.id).then((comment) => {
+      dispatch(addComment({ text: comment, likes: 0, user_id: user.id }));
       setComment("");
     });
   };

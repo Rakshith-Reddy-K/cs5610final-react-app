@@ -29,7 +29,6 @@ function Register() {
       login(username);
       navigate("/home");
     } catch (error) {
-      console.log(error);
       alert("Failed to sign in");
     }
   };

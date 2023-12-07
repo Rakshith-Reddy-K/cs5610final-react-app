@@ -6,16 +6,17 @@ import "./index.css";
 import Comments from "./Comments";
 import { useDispatch } from "react-redux";
 import { UpdateCart } from "../Cart/client";
+import { useAuth } from '../Home/AuthContext'; 
 
 function ProductDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
-  const currentUser = { name: "John Doe", id: 1, isActive: true };
+  const { user, logout } = useAuth();
 
   const handleAddToCart = (productId) => {
-    UpdateCart(currentUser.id, productId).then((product) => {
+    UpdateCart(user.id, productId).then((product) => {
       dispatch(addtoCart(product));
     });
   };
