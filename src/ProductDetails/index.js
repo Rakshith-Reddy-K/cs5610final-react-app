@@ -48,7 +48,7 @@ function ProductDetails() {
               <strong>Rating:</strong> <StarRating rating={product.rate} />
             </div>
             <div>
-              <strong>Seller:</strong> <Link to={`/profile/${product.seller_id}`}>{product.seller_name}</Link>
+              <strong>Seller:</strong> <Link to={`/sellerProfile/${product.seller_id}`}>{product.seller_name}</Link>
 
             </div>
             <button

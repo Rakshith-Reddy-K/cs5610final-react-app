@@ -8,7 +8,7 @@ export default function SellerProfile() {
   const { user } = useAuth();
   const { sellerId } = useParams();
   const [seller, setSeller] = useState();
-  const [error, setError] = useState();
+  const [error, setError] = useState(false);
   const [isUserFollowing,setIsUserFollowing] = useState(null);
   const followSeller = () => {
     if(isUserFollowing !== null) {
@@ -16,8 +16,8 @@ export default function SellerProfile() {
         setIsUserFollowing(null)
       })
     }
-    createFollow(user.id,sellerId).then(()=>{
-      setIsUserFollowing(true)
+    createFollow(user.id,sellerId).then((response)=>{
+      setIsUserFollowing(response.id)
     })
   }
   useEffect(() => {
