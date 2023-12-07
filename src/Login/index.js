@@ -1,6 +1,5 @@
 import * as client from "./client";
 import { useState } from "react";
-// import { Signin } from "./client";
 import { useAuth } from '../Home/AuthContext'; 
 import { useNavigate } from "react-router-dom";
 function Login() {
@@ -30,11 +29,12 @@ function Login() {
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="ms-5 col-md-10 p-5">
       <h2>Login</h2>
 
       <label>User Name</label>
       <input
+      className="form-control"
         type="username"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
@@ -42,14 +42,15 @@ function Login() {
 
       <label>Password</label>
       <input
+      className="form-control"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-
-      <button type="submit">Login</button>
-
-      <button type="button" onClick={() => navigate("/register")}>Sign Up</button>
+      <br></br>
+      <button type="submit" className="btn btn-primary" >Login</button>
+      <p className="ps-5"></p>
+      <button type="button" className="btn btn-warning" onClick={() => navigate("/register")}>Sign Up</button>
 
      
     </form>

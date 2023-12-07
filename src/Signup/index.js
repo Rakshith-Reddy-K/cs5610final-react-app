@@ -2,23 +2,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Signup } from "./client";
 import { useAuth } from "../Home/AuthContext";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Register() {
   const [username, setUsername] = useState("");
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  //   const [passwordConfirm, setConfirmPassword] = useState('');
-  const [isBuyer, setIsBuyer] = useState(false);
+  const [isBuyer, setIsBuyer] = useState(true);
   const [mobilenum, setMobilenum] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const { login } = useAuth();
 
   const handleSubmit = async () => {
-    // e.preventDefault();
-    // console.log(username, email, password, isBuyer, mobilenum);
-
     try {
       const response = await Signup(
         username,
@@ -38,11 +35,12 @@ function Register() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="col-md-10 m-5">
       <h2>Register</h2>
 
       <label>User Name</label>
       <input
+      className="form-control"
         type="text"
         value={username}
         onChange={(e) => setUsername(e.target.value)}
@@ -50,6 +48,7 @@ function Register() {
 
       <label>Name</label>
       <input
+      className="form-control"
         type="text"
         value={name}
         onChange={(e) => setName(e.target.value)}
@@ -57,6 +56,7 @@ function Register() {
 
       <label>Email</label>
       <input
+      className="form-control"
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
@@ -64,6 +64,7 @@ function Register() {
 
       <label>Phone</label>
       <input
+      className="form-control"
         type="text"
         value={mobilenum}
         onChange={(e) => setMobilenum(e.target.value)}
@@ -71,24 +72,11 @@ function Register() {
 
       <label>Password</label>
       <input
+      className="form-control"
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-
-      {/* <label>Confirm Password</label>
-        <input
-          type="password"
-          value={passwordConfirm}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-        /> */}
-
-      {/* <label>Buyer</label>
-        <input
-          type="radio"
-          value={isBuyer}
-          onChange={(e) => setIsBuyer(e.target.value)}
-        /> */}
 
       <br></br>
       <div>
@@ -113,13 +101,14 @@ function Register() {
         <div>
           <label>Description</label>
           <textarea
+          className="form-control"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
       )}
-
-      <button type="submit">Register</button>
+      <br></br>
+      <button className="btn btn-primary" type="submit">Register</button>
     </form>
   );
 }
