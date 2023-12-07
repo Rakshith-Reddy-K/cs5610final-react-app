@@ -10,6 +10,7 @@ import Login from "./Login"
 import Register from "./Signup"
 import { AuthProvider } from "./Home/AuthContext"; 
 import Cart from "./Cart";
+import Admin from "./Admin";
 function App() {
   return (
     <Provider store={store}>
@@ -18,6 +19,7 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/" element={<Navigate to="/Login" />} />
+            <Route path="/admin" element={<Admin/>} />
             <Route path="/Login" element={<Login/>} />
             <Route path="/Register" element={<Register/>} />
             <Route path="/Home" element={<Home />} />
