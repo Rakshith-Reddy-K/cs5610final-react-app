@@ -4,21 +4,26 @@ import { Link, useParams } from 'react-router-dom';
 import { createFollow, deleteFollow, getFollow, getUserById } from './client';
 import './index.css'
 import { useAuth } from '../Home/AuthContext';
+import { getFollowersCount } from './client';
 export default function SellerProfile() {
   const { user } = useAuth();
   const { sellerId } = useParams();
   const [seller, setSeller] = useState();
   const [error, setError] = useState(false);
-  const [isUserFollowing,setIsUserFollowing] = useState(null);
+  const [isUserFollowing,setIsUserFollowing] = useState(false);
+  const [followersCount, setfollowersCount] = useState(null);
   const followSeller = () => {
-    if(isUserFollowing !== null) {
-      deleteFollow(isUserFollowing).then(()=>{
-        setIsUserFollowing(null)
+    if(isUserFollowing) {
+      deleteFollow(user.id,sellerId).then(()=>{
+        setIsUserFollowing(false)
+        setfollowersCount(parseInt(followersCount)-1)
       })
-    }
-    createFollow(user.id,sellerId).then((response)=>{
-      setIsUserFollowing(response.id)
+    } else {
+    createFollow(user.id,sellerId).then(()=>{
+      setIsUserFollowing(true)
+      setfollowersCount(parseInt(followersCount)+1)
     })
+  }
   }
   useEffect(() => {
     getUserById(sellerId).then((user) => {
@@ -27,12 +32,17 @@ export default function SellerProfile() {
     }).catch((err) => {
       setError(err)
     })
+    getFollowersCount(sellerId).then((followers) =>{
+      setfollowersCount(followers.count);
+    }).catch((err) => {
+      setError(err)
+    })
     if(user && user.id) {
     getFollow(user.id,sellerId).then((response)=>{
       if(JSON.stringify(response) === '{}') {
-        setIsUserFollowing(null)  
+        setIsUserFollowing(false)  
       } else {
-      setIsUserFollowing(response.id)
+      setIsUserFollowing(true)
       }
       setError(false)
     }).catch((err) => {
@@ -41,15 +51,15 @@ export default function SellerProfile() {
   }
   }, [sellerId])
   return (
-    <div className="gradient-custom-2" style={{ backgroundColor: '#9de2ff' }}>
+    <div className="gradient-custom-2">
       <MDBContainer className="py-5 h-100">
         <MDBRow>
           <MDBCol>
             <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
               <MDBBreadcrumbItem>
-                <Link to="/Home">Home</Link>
+                <Link to="/Home">Go back to Home</Link>
               </MDBBreadcrumbItem>
-              <MDBBreadcrumbItem active>Seller Profile</MDBBreadcrumbItem>
+              <MDBBreadcrumbItem>Seller's Profile</MDBBreadcrumbItem>
             </MDBBreadcrumb>
           </MDBCol>
         </MDBRow>
@@ -68,15 +78,20 @@ export default function SellerProfile() {
                     <MDBCardText>{seller.email}</MDBCardText>
                   </div>
                 </div>
-                {user && user.id && <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
+                {user && <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
                   <div className="d-flex justify-content-end text-center py-1">
-                  <div>
+                  {followersCount!== null &&<div style={{marginRight:40}}>
+                        <MDBCardText className="mb-1 h5">{followersCount}</MDBCardText>
+                        <MDBCardText className="small text-muted mb-0">Following</MDBCardText>
+                  </div>}
+                  <div style={{marginLeft:40}}>
                       <button type="button" class="btn btn-primary" onClick={followSeller} style={{ height: '36px', overflow: 'visible', margin: 10 }}>
-                        {isUserFollowing!==null? "Unfollow" :"Follow"}
+                        {isUserFollowing? "Unfollow" :"Follow"}
                       </button>
                   </div>
                   </div>
                 </div> }
+                { seller.description!=null && 
                 <MDBCardBody>
                   <div>
                     <p className="lead text-bold mb-1">About</p>
@@ -85,6 +100,7 @@ export default function SellerProfile() {
                     </div>
                   </div>
                 </MDBCardBody>
+                }
                 <MDBCardBody className="text-black">
                   <div >
                     <p className="lead text-bold mb-1" style={{fontWeight:"bolder !important"}}>Contact Details</p>
