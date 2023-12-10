@@ -16,12 +16,12 @@ export default function SellerProfile() {
     if(isUserFollowing) {
       deleteFollow(user.id,sellerId).then(()=>{
         setIsUserFollowing(false)
-        setfollowersCount(followersCount-1)
+        setfollowersCount(parseInt(followersCount)-1)
       })
     } else {
     createFollow(user.id,sellerId).then(()=>{
       setIsUserFollowing(true)
-      setfollowersCount(followersCount+1)
+      setfollowersCount(parseInt(followersCount)+1)
     })
   }
   }
@@ -51,15 +51,15 @@ export default function SellerProfile() {
   }
   }, [sellerId])
   return (
-    <div className="gradient-custom-2" style={{ backgroundColor: '#9de2ff' }}>
+    <div className="gradient-custom-2">
       <MDBContainer className="py-5 h-100">
         <MDBRow>
           <MDBCol>
             <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
               <MDBBreadcrumbItem>
-                <Link to="/Home">Home</Link>
+                <Link to="/Home">Go back to Home</Link>
               </MDBBreadcrumbItem>
-              <MDBBreadcrumbItem active>Seller Profile</MDBBreadcrumbItem>
+              <MDBBreadcrumbItem>Seller's Profile</MDBBreadcrumbItem>
             </MDBBreadcrumb>
           </MDBCol>
         </MDBRow>
@@ -91,6 +91,7 @@ export default function SellerProfile() {
                   </div>
                   </div>
                 </div> }
+                { seller.description!=null && 
                 <MDBCardBody>
                   <div>
                     <p className="lead text-bold mb-1">About</p>
@@ -99,6 +100,7 @@ export default function SellerProfile() {
                     </div>
                   </div>
                 </MDBCardBody>
+                }
                 <MDBCardBody className="text-black">
                   <div >
                     <p className="lead text-bold mb-1" style={{fontWeight:"bolder !important"}}>Contact Details</p>

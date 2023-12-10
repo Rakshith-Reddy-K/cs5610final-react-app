@@ -56,7 +56,7 @@ function BuyerProfile() {
   }, [user])
   console.log("Current uswer",currentUser)
   return (
-    <section style={{ backgroundColor: '#eee' }}>
+    <section>
       <MDBContainer className="py-5">
         <MDBRow>
           <MDBCol>
@@ -64,7 +64,7 @@ function BuyerProfile() {
               <MDBBreadcrumbItem>
                 <Link to="/Home">Home</Link>
               </MDBBreadcrumbItem>
-              <MDBBreadcrumbItem active>Your Profile</MDBBreadcrumbItem>
+              <MDBBreadcrumbItem>Your Profile</MDBBreadcrumbItem>
             </MDBBreadcrumb>
           </MDBCol>
         </MDBRow>
