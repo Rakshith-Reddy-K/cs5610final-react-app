@@ -29,7 +29,7 @@ function Register() {
       login(response);
       navigate("/home");
     } catch (error) {
-      alert("Failed to sign in");
+      alert("Failed to sign up");
     }
   };
 

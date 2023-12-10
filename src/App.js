@@ -14,6 +14,7 @@ import SellerProfile from './Profile/SellerProfile'
 import BuyerProfile from './Profile/BuyerProfile'
 
 import Admin from "./Admin";
+import Seller from "./Seller";
 function App() {
   return (
     <Provider store={store}>
@@ -23,6 +24,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Navigate to="/Login" />} />
             <Route path="/admin" element={<Admin/>} />
+            <Route path="/seller" element={<Seller/>} />
             <Route path="/Login" element={<Login/>} />
             <Route path="/Register" element={<Register/>} />
             <Route path="/Home" element={<Home />} />

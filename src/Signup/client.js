@@ -3,6 +3,7 @@ export const BASE_API = process.env.REACT_APP_STORE_API_BASE;
 
 export const Signup = async (username, name, password, email, mobilenum, isBuyer, description) => {
   let response;
+  console.log(isBuyer);
   if (!isBuyer) {
     response = await axios.post(`${BASE_API}/registerseller`, { "username": username, "name": name,  "password": password, "email":email, "mobilenum":mobilenum, "description": description});
   }

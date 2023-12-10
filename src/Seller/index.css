@@ -1,0 +1,4 @@
+.two-column-table th,
+.two-column-table td {
+  width: 50%;
+}
