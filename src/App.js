@@ -14,9 +14,11 @@ import SellerProfile from './Profile/SellerProfile'
 import BuyerProfile from './Profile/BuyerProfile'
 
 import Admin from "./Admin";
+import NavBar from "./Navbar";
 import Seller from "./Seller";
 function App() {
   return (
+    <div style={{backgroundColor:"floralWhite"}}>
     <Provider store={store}>
       <HashRouter>
         <div>
@@ -37,6 +39,7 @@ function App() {
         </div>
       </HashRouter>
     </Provider>
+    </div>
   );
 }
 

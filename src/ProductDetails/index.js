@@ -9,6 +9,7 @@ import { UpdateCart } from "../Cart/client";
 import { useAuth } from '../Home/AuthContext'; 
 import { Link } from "react-router-dom";
 import { MDBBreadcrumb, MDBBreadcrumbItem, MDBCol, MDBContainer, MDBRow } from "mdb-react-ui-kit";
+import NavBar from "../Navbar";
 
 function ProductDetails() {
   const dispatch = useDispatch();
@@ -30,18 +31,7 @@ function ProductDetails() {
   }, [productId]);
 
   return (<div>
-    <MDBContainer className="py-5">
-        <MDBRow>
-          <MDBCol>
-            <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
-              <MDBBreadcrumbItem>
-                <Link to="/Home">Home</Link>
-              </MDBBreadcrumbItem>
-              {product && <MDBBreadcrumbItem>{product.title}</MDBBreadcrumbItem>}
-            </MDBBreadcrumb>
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
+    <NavBar/>
     <div className="row">
       {product && (
         <div className="product col-12 p-5">

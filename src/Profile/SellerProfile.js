@@ -5,6 +5,7 @@ import { createFollow, deleteFollow, getFollow, getUserById } from './client';
 import './index.css'
 import { useAuth } from '../Home/AuthContext';
 import { getFollowersCount } from './client';
+import NavBar from '../Navbar';
 export default function SellerProfile() {
   const { user } = useAuth();
   const { sellerId } = useParams();
@@ -51,18 +52,9 @@ export default function SellerProfile() {
   }
   }, [sellerId])
   return (
+    <><NavBar/>
     <div className="gradient-custom-2">
       <MDBContainer className="py-5 h-100">
-        <MDBRow>
-          <MDBCol>
-            <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
-              <MDBBreadcrumbItem>
-                <Link to="/Home">Go back to Home</Link>
-              </MDBBreadcrumbItem>
-              <MDBBreadcrumbItem>Seller's Profile</MDBBreadcrumbItem>
-            </MDBBreadcrumb>
-          </MDBCol>
-        </MDBRow>
         {error && <h3 style={{ color: "red" }}>Cannot load seller profile page!!</h3>}
         {seller &&
           <MDBRow className="justify-content-center align-items-center h-100">
@@ -78,7 +70,8 @@ export default function SellerProfile() {
                     <MDBCardText>{seller.email}</MDBCardText>
                   </div>
                 </div>
-                {user && <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
+                 <div className="p-4 text-black" style={{ backgroundColor: '#f8f9fa' }}>
+                 {user &&
                   <div className="d-flex justify-content-end text-center py-1">
                   {followersCount!== null &&<div style={{marginRight:40}}>
                         <MDBCardText className="mb-1 h5">{followersCount}</MDBCardText>
@@ -89,8 +82,8 @@ export default function SellerProfile() {
                         {isUserFollowing? "Unfollow" :"Follow"}
                       </button>
                   </div>
-                  </div>
-                </div> }
+                  </div>}
+                </div>
                 { seller.description!=null && 
                 <MDBCardBody>
                   <div>
@@ -116,5 +109,5 @@ export default function SellerProfile() {
         }
       </MDBContainer>
     </div>
-  );
+    </>);
 }

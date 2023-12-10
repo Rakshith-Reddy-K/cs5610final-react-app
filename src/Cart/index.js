@@ -7,6 +7,7 @@ import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import { RemoveFromCart } from "./client";
 import { Link } from "react-router-dom";
 import "./index.css";
+import NavBar from "../Navbar";
 function Cart() {
   const dispatch = useDispatch();
   const [products, setProducts] = useState(null);
@@ -34,6 +35,7 @@ function Cart() {
   }, []);
 
   return (
+    <><NavBar></NavBar>
     <Container>
       <h1 className="my-4">Cart</h1>
       {cart.length === 0 ? (
@@ -70,6 +72,7 @@ function Cart() {
         })
       )}
     </Container>
+    </>
   );
 }
 

@@ -4,8 +4,7 @@ import { Link } from "react-router-dom";
 import Rating from './rating'; // Make sure to create this component
 import './home.css'; 
 import { useAuth } from './AuthContext';
-import { useNavigate } from "react-router-dom";
-
+import NavBar from '../Navbar';
 
 // Debounce function
 const debounce = (func, delay) => {
@@ -24,7 +23,6 @@ const Home = () => {
     const [products, setProducts] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
     const { user, logout } = useAuth();
-    const navigate = useNavigate();
     // Function to fetch products
     const fetchProducts = async (search = '') => {
         try {
@@ -34,10 +32,6 @@ const Home = () => {
             console.error('Error fetching products:', error);
         }
     };
-    const handleLogout = () => {
-      logout();
-      navigate('/home'); // Redirect to the home page 
-  };
     // Debounced version of fetchProducts
     const debouncedFetchProducts = useCallback(debounce(fetchProducts, 500), []);
 
@@ -50,10 +44,10 @@ const Home = () => {
     useEffect(() => {
       fetchProducts();
   }, []);
-
   return (
       <div>
-         <div className="login-status">
+        <NavBar handleSearchChange={handleSearchChange}></NavBar>
+         {/* <div className="login-status">
                 {user ? (
                     <>
                         <span>Hello, <Link to={`/profile/${user.id}`}>{user.username}</Link></span>
@@ -63,9 +57,9 @@ const Home = () => {
                 ) : (
                     <Link to="/login">Hello, Sign up/Login</Link>
                 )}
-            </div>
+            </div> */}
 
-          <form onSubmit={(e) => e.preventDefault()} className="search-form">
+          {/* <form onSubmit={(e) => e.preventDefault()} className="search-form">
               <input
                   type="text"
                   value={searchTerm}
@@ -73,7 +67,7 @@ const Home = () => {
                   placeholder="Search products..."
                   className="search-input"
               />
-          </form>
+          </form> */}
 
           <div className="product-grid">
               {products.map(product => (

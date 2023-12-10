@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { getFollowingCount, getUserById, updateUser } from './client';
 import { useParams } from "react-router-dom";
 import { useAuth } from '../Home/AuthContext';
+import NavBar from '../Navbar';
 
 function BuyerProfile() {
   const { user , login } = useAuth(); 
@@ -56,18 +57,9 @@ function BuyerProfile() {
   }, [user])
   console.log("Current uswer",currentUser)
   return (
+    <><NavBar/>
     <section>
       <MDBContainer className="py-5">
-        <MDBRow>
-          <MDBCol>
-            <MDBBreadcrumb className="bg-light rounded-3 p-3 mb-4">
-              <MDBBreadcrumbItem>
-                <Link to="/Home">Home</Link>
-              </MDBBreadcrumbItem>
-              <MDBBreadcrumbItem>Your Profile</MDBBreadcrumbItem>
-            </MDBBreadcrumb>
-          </MDBCol>
-        </MDBRow>
         {error && <h3 style={{ color: "red" }}>Cannot load profile page!!</h3>}
         {user &&
           <MDBRow>
@@ -155,6 +147,7 @@ function BuyerProfile() {
       </MDBContainer>
 
     </section>
+    </>
   );
 }
 
