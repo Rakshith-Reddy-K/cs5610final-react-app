@@ -33,8 +33,8 @@ export const createFollow = async(userId,sellerId) => {
     return response.data
 }
 
-export const deleteFollow = async(followId) => {
-    const response = await axios.delete(`${FOLLOWS_URL}/${followId}`)
+export const deleteFollow = async(userId,sellerId) => {
+    const response = await axios.delete(`${FOLLOWS_URL}/${userId}/${sellerId}`)
     return response.data
 }
 
